@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Callcredit Information Group")]
-[assembly: AssemblyProduct("BasicBot")]
+[assembly: AssemblyProduct("Hal")]
 [assembly: AssemblyCopyright("Copyright © Callcredit Information Group 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

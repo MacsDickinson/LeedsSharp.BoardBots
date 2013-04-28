@@ -1,7 +1,5 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using BoardBots.Shared;
-using BasicBot;
 
 namespace BasicBot.Tests
 {
@@ -13,7 +11,7 @@ namespace BasicBot.Tests
         public void TakeTurn_EmptyBoard_PlaysInColumn0Row0()
         {
             // arrange
-            BasicBot player = new BasicBot();
+            Hal player = new Hal();
 
             // act
             var result = player.TakeTurn(new FakeBoard());
@@ -27,7 +25,7 @@ namespace BasicBot.Tests
         public void TakeTurn_Column0Row0AlreadyHasPiece_PlaysInColumn0Row0Anyway()
         {
             // arrange
-            BasicBot player = new BasicBot();
+            Hal player = new Hal();
             FakeBoard partiallyFullBoard = new FakeBoard();
             partiallyFullBoard.Tokens[0, 0] = PlayerToken.Opponent;
 
