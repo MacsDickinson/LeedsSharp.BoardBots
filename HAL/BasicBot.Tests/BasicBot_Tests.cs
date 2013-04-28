@@ -22,7 +22,7 @@ namespace BasicBot.Tests
         }
 
         [Test]
-        public void TakeTurn_Column0Row0AlreadyHasPiece_PlaysInColumn0Row0Anyway()
+        public void TakeTurn_Column0Row0AlreadyHasPiece_PlaysInColumn2Row2()
         {
             // arrange
             Hal player = new Hal();
@@ -33,7 +33,83 @@ namespace BasicBot.Tests
             var result = player.TakeTurn(partiallyFullBoard);
 
             // assert
+            Assert.That(result.Column, Is.EqualTo(2));
+            Assert.That(result.Row, Is.EqualTo(2));
+        }
+
+        [TestCase(0, 1, 2)]
+        [TestCase(1, 2, 0)]
+        [TestCase(0, 2, 1)]
+        public void TakeTurn_TwoOfOwnInAColumn_CompletesTheThree(int y1, int y2, int y3)
+        {
+            // arrange
+            Hal player = new Hal();
+            FakeBoard partiallyFullBoard = new FakeBoard();
+            partiallyFullBoard.Tokens[0, y1] = PlayerToken.Me;
+            partiallyFullBoard.Tokens[0, y2] = PlayerToken.Me;
+
+            // act
+            var result = player.TakeTurn(partiallyFullBoard);
+
+            // assert
             Assert.That(result.Column, Is.EqualTo(0));
+            Assert.That(result.Row, Is.EqualTo(y3));
+        }
+
+        [TestCase(0, 1, 2)]
+        [TestCase(1, 2, 0)]
+        [TestCase(0, 2, 1)]
+        public void TakeTurn_TwoForOpponentInAColumn_BlocksTheThree(int y1, int y2, int y3)
+        {
+            // arrange
+            Hal player = new Hal();
+            FakeBoard partiallyFullBoard = new FakeBoard();
+            partiallyFullBoard.Tokens[0, y1] = PlayerToken.Opponent;
+            partiallyFullBoard.Tokens[0, y2] = PlayerToken.Opponent;
+
+            // act
+            var result = player.TakeTurn(partiallyFullBoard);
+
+            // assert
+            Assert.That(result.Column, Is.EqualTo(0));
+            Assert.That(result.Row, Is.EqualTo(y3));
+        }
+
+        [TestCase(0, 1, 2)]
+        [TestCase(1, 2, 0)]
+        [TestCase(0, 2, 1)]
+        public void TakeTurn_TwoOfOwnInARow_CompletesTheThree(int x1, int x2, int x3)
+        {
+            // arrange
+            Hal player = new Hal();
+            FakeBoard partiallyFullBoard = new FakeBoard();
+            partiallyFullBoard.Tokens[x1, 0] = PlayerToken.Me;
+            partiallyFullBoard.Tokens[x2, 0] = PlayerToken.Me;
+
+            // act
+            var result = player.TakeTurn(partiallyFullBoard);
+
+            // assert
+            Assert.That(result.Column, Is.EqualTo(x3));
+            Assert.That(result.Row, Is.EqualTo(0));
+        }
+
+        [TestCase(0, 1, 2)]
+        [TestCase(1, 2, 0)]
+        [TestCase(0, 2, 1)]
+        public void TakeTurn_TwoForOpponentInARow_BlocksTheThree(int x1, int x2, int x3)
+        {
+            // arrange
+            Hal player = new Hal();
+            FakeBoard partiallyFullBoard = new FakeBoard();
+            partiallyFullBoard.Tokens[x1, 0] = PlayerToken.Opponent;
+            partiallyFullBoard.Tokens[x2, 0] = PlayerToken.Opponent;
+
+            // act
+            var result = player.TakeTurn(partiallyFullBoard);
+
+            // assert
+            Assert.That(result.Column, Is.EqualTo(x3));
             Assert.That(result.Row, Is.EqualTo(0));
         }
 

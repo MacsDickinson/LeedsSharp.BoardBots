@@ -73,6 +73,11 @@ namespace BasicBot
             return BoardPosition.At(0, 0);
         }
 
+        public bool ShouldDefent(IPlayerBoard board)
+        {
+            return false;
+        }
+
         public BoardPosition CompleteThree(IPlayerBoard board, PlayerToken token)
         {
             return (from winningCombination in WinningCombinations 
