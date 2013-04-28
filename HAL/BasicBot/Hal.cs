@@ -53,10 +53,21 @@ namespace BasicBot
             {
                 return blockingMove;
             }
-            // Any corners free
-            foreach (int[] corner in Corners.Where(corner => board.TokenAt(BoardPosition.At(corner[0], corner[1])) == PlayerToken.None))
+            if (ShouldDefent(board))
             {
-                return BoardPosition.At(corner[0], corner[1]);
+                BoardPosition defensiveMove = PlayDefensiveMove(board);
+                if (defensiveMove != null)
+                {
+                    return defensiveMove;
+                }
+            }
+            else
+            {
+                // Any corners free
+                foreach (int[] corner in Corners.Where(corner => board.TokenAt(BoardPosition.At(corner[0], corner[1])) == PlayerToken.None))
+                {
+                    return BoardPosition.At(corner[0], corner[1]);
+                }
             }
             // Just wap it in the next free spot
             for (int i = 0; i < 3; i++)
@@ -73,9 +84,61 @@ namespace BasicBot
             return BoardPosition.At(0, 0);
         }
 
+        private static BoardPosition PlayDefensiveMove(IPlayerBoard board)
+        {
+            // Take the middle spot
+            if (board.TokenAt(BoardPosition.At(1, 1)) == PlayerToken.None)
+            {
+                return BoardPosition.At(1, 1);
+            }
+            // Any rows need blocking
+            for (int i = 0; i < 3; i++)
+            {
+                if (RowHasToken(board, i, PlayerToken.Opponent))
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (board.TokenAt(BoardPosition.At(i, j)) == PlayerToken.None)
+                        {
+                            return BoardPosition.At(i, j);
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        private static bool RowHasToken(IPlayerBoard board, int row, PlayerToken playerToken)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (board.TokenAt(BoardPosition.At(i, row)) == playerToken)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool ShouldDefent(IPlayerBoard board)
         {
-            return false;
+            int countMe = 0;
+            int countOpponent = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (board.TokenAt(BoardPosition.At(i, j)) == PlayerToken.Me)
+                    {
+                        countMe++;
+                    }
+                    if (board.TokenAt(BoardPosition.At(i, j)) == PlayerToken.Opponent)
+                    {
+                        countOpponent++;
+                    }
+                }
+            }
+            return (countMe < countOpponent);
         }
 
         public BoardPosition CompleteThree(IPlayerBoard board, PlayerToken token)

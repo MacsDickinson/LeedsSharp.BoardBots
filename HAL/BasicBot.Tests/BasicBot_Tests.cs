@@ -22,7 +22,7 @@ namespace BasicBot.Tests
         }
 
         [Test]
-        public void TakeTurn_Column0Row0AlreadyHasPiece_PlaysInColumn2Row2()
+        public void TakeTurn_Column0Row0AlreadyHasPiece_PlaysInMiddle()
         {
             // arrange
             Hal player = new Hal();
@@ -33,8 +33,8 @@ namespace BasicBot.Tests
             var result = player.TakeTurn(partiallyFullBoard);
 
             // assert
-            Assert.That(result.Column, Is.EqualTo(2));
-            Assert.That(result.Row, Is.EqualTo(2));
+            Assert.That(result.Column, Is.EqualTo(1));
+            Assert.That(result.Row, Is.EqualTo(1));
         }
 
         [TestCase(0, 1, 2)]
