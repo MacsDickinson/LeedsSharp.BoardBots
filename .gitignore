@@ -95,6 +95,7 @@ TestResults
 ClientBin
 [Ss]tyle[Cc]op.*
 ~$*
+*.sln*
 *.dbmdl
 PublishProfiles
 Generated_Code #added for RIA/Silverlight projects
