@@ -1,11 +1,11 @@
 ﻿html {
     background-color: #006D4C;
+    background-image: url(..\\Images\\pool_table.png);
     margin: 0;
     padding: 0;
 }
 
 body {
-    background-color: #006D4C;
     border-top: solid 10px #D2875F;
     color: #333;
     font-size: .85em;
@@ -48,6 +48,9 @@ footer {
     font-weight: 700;
     text-align: center;
 }
+    footer a {
+        color: #D2875F !important;
+    }
 
 mark {
     background-color: #a6dbed;
